@@ -71,7 +71,7 @@ object Parser {
     fun readPaymentRequest(
         input: String
     ): PaymentRequest? = try {
-        PaymentRequest.read(trimMatchingPrefix(removeExcessInput(input), lightningPrefixes))
+        PaymentRequest.read(trimMatchingPrefix(removeExcessInput(input), lightningPrefixes)).get()
     } catch (t: Throwable) {
         null
     }
@@ -118,7 +118,7 @@ object Parser {
         val message = url.parameters["message"]
         val lightning = url.parameters["lightning"]?.let {
             try {
-                PaymentRequest.read(it)
+                PaymentRequest.read(it).get()
             } catch (e: Exception) {
                 null
             }

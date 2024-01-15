@@ -21,7 +21,7 @@ val chain: String by project
 android {
     compileSdk = 33
     defaultConfig {
-        applicationId = "fr.acinq.phoenix.testnet"
+        applicationId = "fr.acinq.phoenix.regtest"
         minSdk = 26
         targetSdk = 33
         versionCode = 73

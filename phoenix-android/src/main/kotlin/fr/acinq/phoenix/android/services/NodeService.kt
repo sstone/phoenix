@@ -17,7 +17,9 @@ import fr.acinq.bitcoin.TxId
 import fr.acinq.lightning.LiquidityEvents
 import fr.acinq.lightning.MilliSatoshi
 import fr.acinq.lightning.io.PaymentReceived
+import fr.acinq.lightning.io.TcpSocket
 import fr.acinq.lightning.utils.Connection
+import fr.acinq.lightning.utils.ServerAddress
 import fr.acinq.lightning.utils.currentTimestampMillis
 import fr.acinq.phoenix.PhoenixBusiness
 import fr.acinq.phoenix.android.BuildConfig
@@ -222,7 +224,7 @@ class NodeService : Service() {
 
         // retrieve preferences before starting business
         val business = (applicationContext as? PhoenixApplication)?.business?.first() ?: throw RuntimeException("invalid context type, should be PhoenixApplication")
-        val electrumServer = UserPrefs.getElectrumServer(applicationContext).first()
+        val electrumServer = ServerAddress("10.0.2.2", 51001, TcpSocket.TLS.DISABLED) // UserPrefs.getElectrumServer(applicationContext).first()
         val isTorEnabled = UserPrefs.getIsTorEnabled(applicationContext).first()
         val liquidityPolicy = UserPrefs.getLiquidityPolicy(applicationContext).first()
         val trustedSwapInTxs = LegacyPrefsDatastore.getMigrationTrustedSwapInTxs(applicationContext).first()

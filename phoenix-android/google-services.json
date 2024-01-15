@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:358118532563:android:1d78424d5ee93df0e4fb26",
         "android_client_info": {
-          "package_name": "fr.acinq.phoenix.android"
+          "package_name": "fr.acinq.phoenix.regtest"
         }
       },
       "oauth_client": [

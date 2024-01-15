@@ -78,10 +78,10 @@ class NodeParamsManager(
     }
 
     companion object {
-        val chain = NodeParams.Chain.Testnet
-        val trampolineNodeId = PublicKey.fromHex("03933884aaf1d6b108397e5efe5c86bcf2d8ca8d2f700eda99db9214fc2712b134")
-        val trampolineNodeUri = NodeUri(id = trampolineNodeId, "13.248.222.197", 9735)
-        const val remoteSwapInXpub = "tpubDAmCFB21J9ExKBRPDcVxSvGs9jtcf8U1wWWbS1xTYmnUsuUHPCoFdCnEGxLE3THSWcQE48GHJnyz8XPbYUivBMbLSMBifFd3G9KmafkM9og"
+        val chain = NodeParams.Chain.Regtest
+        val trampolineNodeId = PublicKey.fromHex("0230ef306690e4199f75ecdaa79370d71820beda92b9d88cf84807a5958857a712")
+        val trampolineNodeUri = NodeUri(id = trampolineNodeId, "10.0.2.2", 29735)
+        const val remoteSwapInXpub = "tpubDBoVAStystyLcS6R92CwdpfeUoRtwLgFJtSgb2DnqoFQ7GcCKR7RmhRfB15y6PbcwSnyXFXXCMZ75py4ex72HohXP4Ax7Un15r7xYu3ZKHj"
         val defaultLiquidityPolicy = LiquidityPolicy.Auto(maxAbsoluteFee = 5_000.sat, maxRelativeFeeBasisPoints = 50_00 /* 50% */, skipAbsoluteFeeCheck = false)
 
         fun liquidityLeaseRate(amount: Satoshi): LiquidityAds.LeaseRate {

@@ -112,7 +112,7 @@ sealed class LnurlPay : Lnurl.Qualified {
             try {
                 val pr = json["pr"]?.jsonPrimitive?.content ?: throw LnurlError.Pay.Invoice.Malformed(origin, "missing pr")
                 val paymentRequest = try {
-                    PaymentRequest.read(pr) // <- throws
+                    PaymentRequest.read(pr).get() // <- throws
                 } catch (t: Throwable) {
                     throw LnurlError.Pay.Invoice.Malformed(origin, "unreadable pr")
                 }
