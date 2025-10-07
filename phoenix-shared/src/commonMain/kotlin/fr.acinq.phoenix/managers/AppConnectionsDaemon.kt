@@ -263,11 +263,12 @@ class AppConnectionsDaemon(
                             statusStateFlow = electrumClient.connectionStatus.map { it.toConnectionState() }.stateIn(this)
                         ) { connectionAttempt ->
                             val electrumConfig = configurationManager.electrumConfig.value
-                            val electrumServerAddress = when (electrumConfig) {
-                                is ElectrumConfig.Custom -> electrumConfig.server
-                                is ElectrumConfig.Random -> configurationManager.randomElectrumServer(it.torIsEnabled)
-                                null -> null
-                            }
+                            val electrumServerAddress = ServerAddress("10.0.2.2", 50001, TcpSocket.TLS.DISABLED)
+//                            val electrumServerAddress = when (electrumConfig) {
+//                                is ElectrumConfig.Custom -> electrumConfig.server
+//                                is ElectrumConfig.Random -> configurationManager.randomElectrumServer(it.torIsEnabled)
+//                                null -> null
+//                            }
                             if (electrumServerAddress == null) {
                                 logger.debug { "ignoring electrum connection opportunity because no server is configured yet" }
                             } else {

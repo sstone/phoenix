@@ -1,3 +1,4 @@
+import org.gradle.internal.os.OperatingSystem
 import java.io.ByteArrayOutputStream
 import co.touchlab.skie.configuration.SuspendInterop
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -54,22 +55,24 @@ kotlin {
         }
     }
 
-    listOf(iosX64(), iosArm64(), iosSimulatorArm64()).forEach {
-        it.binaries {
-            framework {
-                baseName = "PhoenixShared"
-            }
-            configureEach {
-                it.compilations.all {
-                    freeCompilerArgs += "-Xoverride-konan-properties=osVersionMin.ios_x64=16.0;osVersionMin.ios_arm64=16.0"
-                    // The notification-service-extension is limited to 24 MB of memory.
-                    // With mimalloc we can easily hit the 24 MB limit, and the OS kills the process.
-                    // But with standard allocation, we're using less then half the limit.
-                    freeCompilerArgs += "-Xallocator=std"
-                    freeCompilerArgs += listOf("-linker-options", "-application_extension")
-                    // workaround for IndexOutOfBoundsException with phoenix-shared:linkReleaseFrameworkIosArm64 in iOS Archive build
-                    // see https://youtrack.jetbrains.com/issue/KT-64508
-                    freeCompilerArgs += "-Xdisable-phases=RemoveRedundantCallsToStaticInitializersPhase"
+    if (OperatingSystem.current().isMacOsX) {
+        listOf(iosX64(), iosArm64(), iosSimulatorArm64()).forEach {
+            it.binaries {
+                framework {
+                    baseName = "PhoenixShared"
+                }
+                configureEach {
+                    it.compilations.all {
+                        freeCompilerArgs += "-Xoverride-konan-properties=osVersionMin.ios_x64=16.0;osVersionMin.ios_arm64=16.0"
+                        // The notification-service-extension is limited to 24 MB of memory.
+                        // With mimalloc we can easily hit the 24 MB limit, and the OS kills the process.
+                        // But with standard allocation, we're using less then half the limit.
+                        freeCompilerArgs += "-Xallocator=std"
+                        freeCompilerArgs += listOf("-linker-options", "-application_extension")
+                        // workaround for IndexOutOfBoundsException with phoenix-shared:linkReleaseFrameworkIosArm64 in iOS Archive build
+                        // see https://youtrack.jetbrains.com/issue/KT-64508
+                        freeCompilerArgs += "-Xdisable-phases=RemoveRedundantCallsToStaticInitializersPhase"
+                    }
                 }
             }
         }
@@ -132,19 +135,20 @@ kotlin {
             }
         }
 
-        // -- ios sources
-        val iosMain by creating {
-            dependencies {
-                implementation("app.cash.sqldelight:native-driver:${libs.versions.sqldelight.get()}")
+        if (OperatingSystem.current().isMacOsX) {
+            // -- ios sources
+            val iosMain by creating {
+                dependencies {
+                    implementation("app.cash.sqldelight:native-driver:${libs.versions.sqldelight.get()}")
+                }
+            }
+
+            val iosTest by creating {
+                dependencies {
+                    implementation("app.cash.sqldelight:native-driver:${libs.versions.sqldelight.get()}")
+                }
             }
         }
-
-        val iosTest by creating {
-            dependencies {
-                implementation("app.cash.sqldelight:native-driver:${libs.versions.sqldelight.get()}")
-            }
-        }
-
         all {
             languageSettings.optIn("kotlin.RequiresOptIn")
         }

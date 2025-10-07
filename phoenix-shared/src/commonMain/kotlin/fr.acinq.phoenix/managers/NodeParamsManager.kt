@@ -83,11 +83,11 @@ class NodeParamsManager(
     }
 
     companion object {
-        val chain = Chain.Testnet3
-        val trampolineNodeId = PublicKey.fromHex("03933884aaf1d6b108397e5efe5c86bcf2d8ca8d2f700eda99db9214fc2712b134")
-        val trampolineNodeUri = NodeUri(id = trampolineNodeId, "13.248.222.197", 9735)
+        val chain = Chain.Regtest
+        val trampolineNodeId = PublicKey.fromHex("02e7185d5c48e0004b6531a04d4d0182f6c9a6501c29f584729dc8c79b989c7292")
+        val trampolineNodeUri = NodeUri(id = trampolineNodeId, "10.0.2.2", 29735)
         val trampolineNodeOnionUri = NodeUri(id = trampolineNodeId, "iq7zhmhck54vcax2vlrdcavq2m32wao7ekh6jyeglmnuuvv3js57r4id.onion", 9735)
-        const val remoteSwapInXpub = "tpubDAmCFB21J9ExKBRPDcVxSvGs9jtcf8U1wWWbS1xTYmnUsuUHPCoFdCnEGxLE3THSWcQE48GHJnyz8XPbYUivBMbLSMBifFd3G9KmafkM9og"
+        const val remoteSwapInXpub = "tpubDAyurcGut5Rwz28dYUujfeMk4fFF8FyLn22sQmrY9TbW8yq2y6ByA3dawNV869epZzRE6YfaGLW6D1WgTqnyB4iS7tX4RP3RUBLbB81JSCq"
         val defaultLiquidityPolicy = LiquidityPolicy.Auto(
             inboundLiquidityTarget = null, // auto inbound liquidity is disabled (it must be purchased manually)
             maxAbsoluteFee = 5_000.sat,
